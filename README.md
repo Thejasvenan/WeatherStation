@@ -79,7 +79,7 @@ The server will start on `http://localhost:5000` or the port defined in your `.e
 * **Heroku** is used to deploy the backend due to its **student-friendly free credentials** and reliable hosting.
 * **Netlify** is used for hosting the frontend due to its fast performance and free tier.
 
-🔗 **Frontend Website**: [weatherstationm2.netlify.app](https://weatherstationm2.netlify.app/)
+🔗 **Frontend Website**: [weatherstationm2.netlify.app](https://weatherstationm2.netlify.app/)  
 🔗 **Frontend GitHub Repo**: [github.com/Thejasvenan/WeatherFrontend](https://github.com/Thejasvenan/WeatherFrontend)
 
 ---
