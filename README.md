@@ -6,11 +6,12 @@ This repository contains the backend server and ESP32 Arduino code for our **IoT
 
 ## 🛠️ Fully Custom-Built Backend (by Me 😎)
 
-This **Node.js-based web server** was **fully custom-made by myself** with the goal of building a lightweight yet powerful backend tailored specifically for real-time IoT data handling.
+This **Node.js + Express.js-based web server** was **fully custom-made by myself** with the goal of building a lightweight yet powerful backend tailored specifically for real-time IoT data handling.
 
 ### 🔥 Unique Features
 
 - **Direct JSON communication** with ESP32 over HTTP using minimal payload for efficiency.
+- Built with **Express.js**, a minimalist and flexible framework, making routing and middleware management efficient and clean.
 - **Smart validation**: Ensures no incomplete or invalid sensor entries are saved.
 - **Dual API support**:
   - `/api/weather/current` → for displaying current readings on the dashboard.
