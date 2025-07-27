@@ -1,104 +1,114 @@
-# 🌤️ IoT Weather Monitoring System - Backend & ESP32 Code
+# 🌤️ IoT Weather Monitoring System - Backend & ESP32 Integration
 
-This repository contains the backend server and ESP32 Arduino code for our **IoT-based Weather Monitoring System**. The system collects real-time environmental data such as temperature, pressure, wind speed, wind direction, UV index, and light intensity using sensors, and transmits it to a web server where it's processed, stored in a MySQL database, and visualized on a frontend dashboard.
-
----
-
-## 🛠️ Fully Custom-Built Backend (by Me 😎)
-
-This **Node.js + Express.js-based web server** was **fully custom-made by myself** with the goal of building a lightweight yet powerful backend tailored specifically for real-time IoT data handling.
-
-### 🔥 Unique Features
-
-- **Direct JSON communication** with ESP32 over HTTP using minimal payload for efficiency.
-- Built with **Express.js**, a minimalist and flexible framework, making routing and middleware management efficient and clean.
-- **Smart validation**: Ensures no incomplete or invalid sensor entries are saved.
-- **Dual API support**:
-  - `/api/weather/current` → for displaying current readings on the dashboard.
-  - `/api/sensor-data` → for visualizing historical trends.
-- **Meaningful error handling**: If data is missing or the ESP32 isn't connected, clear and informative responses are returned.
-- **Built-in scalability**: Clean structure allows easy extension for more endpoints or sensor types in the future.
+This repository contains the **fully custom-built backend server** and **ESP32 Arduino code** for our **IoT-based Weather Monitoring System**. The system collects real-time environmental data (temperature, pressure, wind speed/direction, UV index, and light intensity) from sensors, transmits it to a custom web server, and stores readings in a MySQL database for visualization and analysis.
 
 ---
 
-## 🗂️ Repository Branches
+## 🛠️ Fully Custom-Built Backend System
 
-- **`backend` branch** → Contains the `server.js` (Node.js) backend that:
-  - Receives data from ESP32 via POST.
-  - Stores data in a MySQL database.
-  - Provides API routes for both live and historical data.
-  
-- **`esp32-code` branch** → Contains the Arduino sketch for ESP32 which:
-  - Reads sensors.
-  - Formats and sends JSON data to the server.
+**Purpose-built with Node.js and Express.js** to serve as the bridge between ESP32 sensors and frontend dashboard, featuring robust data handling and security.
 
----
+### 🔥 Core Features
 
-## 🔐 Secure Credentials with Dotenv
+**Backend (Node.js/Express.js):**
+- ✅ **Lightweight Express.js server** optimized for IoT payloads
+- 🔄 **Dual API endpoints**:
+  - `POST /api/sensor-data` → Receives & validates ESP32 JSON data
+  - `GET /api/weather/current` → Returns latest sensor readings
+  - `GET /api/sensor-data` → Provides historical data for analytics
+- 🛡️ **Data Validation**:
+  - Rejects incomplete/invalid sensor entries
+  - Returns meaningful error messages (e.g., "ESP32 offline", "Invalid sensor data")
+- 🏗️ **Modular Architecture**:
+  - Easy to extend with new sensors/endpoints
+  - Clear separation of routes, controllers, and DB logic
 
-To **protect sensitive database credentials**, this project uses the **dotenv** package.
-
-- Credentials are stored in a `.env` file. 
-- Example `.env`:
-  ```env
-  DB_HOST=your_database_host
-  DB_USER=your_mysql_user
-  DB_PASSWORD=your_mysql_password
-  DB_NAME=your_database_name
-
----
-
-## 🚀 How to Run the Server
-
-1. Clone the repository and switch to the `backend` branch:
-
-   ```bash
-   git checkout backend
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file in the root directory with your database details (as shown above).
-
-4. Start the server:
-
-   ```bash
-   node server.js
-   ```
-
-The server will start on `http://localhost:5000` or the port defined in your `.env`.
+**ESP32 (Arduino):**
+- 📶 **Efficient HTTP communication** with minimal JSON payloads
+- ⚡ **Low-power optimizations** for continuous operation
+- 🔧 **Sensor calibration support** in firmware
 
 ---
 
-## 🌐 Deployment
+## 🗂️ Repository Structure
 
-* **Heroku** is used to deploy the backend due to its **student-friendly free credentials** and reliable hosting.
-* **Netlify** is used for hosting the frontend due to its fast performance and free tier.
-
-🔗 **Frontend Website**: [weatherstationm2.netlify.app](https://weatherstationm2.netlify.app/)  
-🔗 **Frontend GitHub Repo**: [github.com/Thejasvenan/WeatherFrontend](https://github.com/Thejasvenan/WeatherFrontend)
+| Branch       | Contents |
+|--------------|----------|
+| **`backend`** | `server.js`, database models, API routes, and middleware |
+| **`esp32-code`** | Complete Arduino sketch for sensor reading and HTTP transmission |
 
 ---
 
-## 💡 Future Software Improvements
+## 🔐 Security & Credential Management
 
-* 🔐 User authentication & login system
-* 📱 Mobile app to complement the website
-* 🚨 Real-time alerts for abnormal sensor data
-* 🔒 Encrypted data transfer (end-to-end HTTPS & SSL)
-* 🔐 Encrypted data-at-rest in MySQL
-* 📊 Auto-scaling for larger datasets and more sensors
+**Enterprise-grade protection using:**
+- **Dotenv** for credential isolation
+- **Git-ignored `.env` file** pattern
+- **Encrypted database connections**
 
-## 🔧 Planned Hardware Enhancements
+### 🛡️ Example `.env` Configuration
+```env
+DB_HOST=your-database-host
+DB_USER=your-db-username
+DB_PASSWORD=your-db-password
+DB_NAME=your-database-name
+```
 
-* 🎯 Wind direction readings accurate to **1 decimal place**
-* 🌧️ Fully waterproof & weather-resistant enclosures
-* 🔋 Battery-free operation for ESP32 (solar-powered / long-life)
-* 🌐 Remote connectivity (SIM/GSM module or LoRa for offline locations)
+---
+
+## 🚀 Deployment & Infrastructure
+
+### ☁️ Hosting Solutions
+| Component   | Platform  | Benefits |
+|-------------|-----------|----------|
+| **Backend** | Heroku    | Free tier, auto-scaling, easy CI/CD |
+| **Frontend** | Netlify  | Global CDN, instant cache invalidation |
+| **Database** | MySQL | Relational data integrity |
+
+### 🌐 Live Systems
+- 🖥️ **Dashboard**: [weatherstationm2.netlify.app](https://weatherstationm2.netlify.app)
+- 💾 **Frontend Code**: [github.com/Thejasvenan/WeatherFrontend](https://github.com/Thejasvenan/WeatherFrontend)
+
+---
+
+## 🔧 Installation Guide
+
+### Backend Setup
+```bash
+git clone https://github.com/your-repo.git
+git checkout backend
+npm install
+echo "DB_HOST=localhost\nDB_USER=root\nDB_PASSWORD=pass\nDB_NAME=weather" > .env
+node server.js
+```
+
+### ESP32 Setup
+1. Install required Arduino libraries:
+   - WiFi.h
+   - HTTPClient.h
+   - Sensor-specific libraries
+2. Configure `SECRET_SSID` and `SECRET_PASS` in credentials.h
+3. Set backend endpoint in `config.h`
+
+---
+
+## 🚧 Future Roadmap
+
+### 💻 Software Enhancements
+| Priority | Feature | Status |
+|----------|---------|--------|
+| P0 | HTTPS/SSL Encryption | Planned |
+| P1 | User Authentication | In Design |
+| P2 | Anomaly Detection Alerts | Research Phase |
+| P3 | Mobile App Integration | Backlog |
+
+### ⚙️ Hardware Improvements
+| Component | Upgrade Target |
+|-----------|----------------|
+| Wind Vane | 1° precision with hall-effect sensors |
+| Housing | IP67 waterproof enclosures |
+| Power | Solar + supercapacitor backup |
+| Connectivity | LoRaWAN for remote sites |
 
 ---
 
