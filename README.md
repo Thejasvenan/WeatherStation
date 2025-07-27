@@ -1,125 +1,120 @@
-# 🌤️ IoT Weather Monitoring System - Backend
+# 🌤️ IoT Weather Monitoring System - Backend & ESP32 Integration
 
-This repository contains the **backend server** and **ESP32 Arduino code** for our **IoT-based Weather Monitoring System**. The system collects real-time environmental data such as temperature, pressure, wind speed, wind direction, UV index, and light intensity from sensors, transmits it to a custom web server, and stores the readings in a MySQL database for visualization and analysis.
-
----
-
-## 🛠️ Fully Custom-Built Backend
-
-This backend is **fully custom-made using Node.js and Express.js**, purpose-built for real-time sensor data collection, processing, and distribution. It serves as the **bridge between ESP32 and the frontend dashboard**, ensuring secure, efficient, and meaningful data handling.
-
-### 🔥 Key Features
-
-- **Express.js-based server** for handling HTTP POST/GET requests smoothly.
-- **Direct JSON communication** with ESP32 for minimal and structured payload exchange.
-- **Data validation logic** that ensures only valid and complete sensor records are stored.
-- **Dual API endpoints**:
-  - `POST /api/sensor-data` → to receive new sensor readings.
-  - `GET /api/weather/current` → to fetch the most recent sensor data.
-  - `GET /api/sensor-data` → to fetch historical data for dashboard charts.
-- **Error handling**: If the ESP32 is offline or the database/server fails, user-friendly error messages are shown on the frontend (e.g., “ESP32 not connected”, “Server not available”).
-- **Clean structure** for easy expansion (adding more sensors or analytics later).
+This repository contains the **fully custom-built backend server** and **ESP32 Arduino code** for our **IoT-based Weather Monitoring System**. The system collects real-time environmental data (temperature, pressure, wind speed/direction, UV index, and light intensity) from sensors, transmits it to a custom web server, and stores readings in a MySQL database for visualization and analysis.
 
 ---
 
-## 🗂️ Repository Branches
+## 🛠️ Fully Custom-Built Backend System
 
-- **`backend` branch** → Contains `server.js`, the backend API that:
-  - Accepts data from ESP32.
-  - Validates and stores it into MySQL.
-  - Serves real-time and historical data to the frontend.
-  
-- **`esp32-code` branch** → Contains the Arduino sketch that:
-  - Reads and formats data from sensors.
-  - Sends JSON to the backend via HTTP.
+**Purpose-built with Node.js and Express.js** to serve as the bridge between ESP32 sensors and frontend dashboard, featuring robust data handling and security.
+
+### 🔥 Core Features
+
+**Backend (Node.js/Express.js):**
+- ✅ **Lightweight Express.js server** optimized for IoT payloads
+- 🔄 **Dual API endpoints**:
+  - `POST /api/sensor-data` → Receives & validates ESP32 JSON data
+  - `GET /api/weather/current` → Returns latest sensor readings
+  - `GET /api/sensor-data` → Provides historical data for analytics
+- 🛡️ **Data Validation**:
+  - Rejects incomplete/invalid sensor entries
+  - Returns meaningful error messages (e.g., "ESP32 offline", "Invalid sensor data")
+- 🏗️ **Modular Architecture**:
+  - Easy to extend with new sensors/endpoints
+  - Clear separation of routes, controllers, and DB logic
+
+**ESP32 (Arduino):**
+- 📶 **Efficient HTTP communication** with minimal JSON payloads
+- ⚡ **Low-power optimizations** for continuous operation
+- 🔧 **Sensor calibration support** in firmware
 
 ---
 
-## 🔐 Secure Credential Management with Dotenv
+## 🗂️ Repository Structure
 
-To keep your MySQL credentials safe and secure:
+| Branch       | Contents |
+|--------------|----------|
+| **`backend`** | `server.js`, database models, API routes, and middleware |
+| **`esp32-code`** | Complete Arduino sketch for sensor reading and HTTP transmission |
 
-- This project uses the [`dotenv`](https://www.npmjs.com/package/dotenv) package.
-- All database credentials are stored in a `.env` file (excluded from version control).
+---
 
-### ✅ Example `.env` file
+## 🔐 Security & Credential Management
 
+**Enterprise-grade protection using:**
+- **Dotenv** for credential isolation
+- **Git-ignored `.env` file** pattern
+- **Encrypted database connections**
+
+### 🛡️ Example `.env` Configuration
 ```env
 DB_HOST=your-database-host
 DB_USER=your-db-username
 DB_PASSWORD=your-db-password
 DB_NAME=your-database-name
-PORT=5000
-````
+```
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Deployment & Infrastructure
 
-To run the backend locally:
+### ☁️ Hosting Solutions
+| Component   | Platform  | Benefits |
+|-------------|-----------|----------|
+| **Backend** | Heroku    | Free tier, auto-scaling, easy CI/CD |
+| **Frontend** | Netlify  | Global CDN, instant cache invalidation |
+| **Database** | MySQL | Relational data integrity |
 
-1. Clone the repository and switch to the `backend` branch:
-
-   ```bash
-   git checkout backend
-   ```
-
-2. Install the dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file in the root directory with your MySQL credentials (as shown above).
-
-4. Start the server:
-
-   ```bash
-   node server.js
-   ```
-
-> The backend will run on `http://localhost:5000` or the port defined in your `.env`.
+### 🌐 Live Systems
+- 🖥️ **Dashboard**: [weatherstationm2.netlify.app](https://weatherstationm2.netlify.app)
+- 💾 **Frontend Code**: [github.com/Thejasvenan/WeatherFrontend](https://github.com/Thejasvenan/WeatherFrontend)
 
 ---
 
-## 🌐 Deployment
+## 🔧 Installation Guide
 
-### 🚀 Cloud Hosting
+### Backend Setup
+```bash
+git clone https://github.com/your-repo.git
+git checkout backend
+npm install
+echo "DB_HOST=localhost\nDB_USER=root\nDB_PASSWORD=pass\nDB_NAME=weather" > .env
+node server.js
+```
 
-* **Heroku** was chosen to deploy the backend due to its **free student-friendly plan**, seamless integration, and reliable uptime.
-* **Netlify** is used to host the frontend React application due to its **zero-cost hosting and fast CDN delivery**.
-
-### 🔗 Live Frontend
-
-* 🌍 **Website**: [https://weatherstationm2.netlify.app](https://weatherstationm2.netlify.app)
-* 💻 **Frontend GitHub Repo**: [WeatherStation Frontend](https://github.com/Thejasvenan/WeatherFrontend)
-
----
-
-## 💡 Future Software Enhancements
-
-* 🔐 Add user authentication and access control
-* 🚨 Real-time alerts for abnormal sensor readings
-* 📱 Mobile app integration
-* 🔒 Encrypted data transmission using HTTPS + SSL/TLS
-* 🔐 Encrypt historical data stored in MySQL
-* ⚙️ Auto-scaling architecture for adding more sensors
+### ESP32 Setup
+1. Install required Arduino libraries:
+   - WiFi.h
+   - HTTPClient.h
+   - Sensor-specific libraries
+2. Configure `SECRET_SSID` and `SECRET_PASS` in credentials.h
+3. Set backend endpoint in `config.h`
 
 ---
 
-## 🧰 Planned Hardware Improvements
+## 🚧 Future Roadmap
 
-* 🎯 Achieve **1-decimal accuracy** for wind direction sensing
-* 🌧️ Build **fully waterproof and robust** sensor enclosures
-* 🔋 Enable **battery-free ESP32 operation** using solar or long-life power
-* 📶 Use **GSM/SIM or LoRa modules** for connecting in remote/no-internet areas
+### 💻 Software Enhancements
+| Priority | Feature | Status |
+|----------|---------|--------|
+| P0 | HTTPS/SSL Encryption | Planned |
+| P1 | User Authentication | In Design |
+| P2 | Anomaly Detection Alerts | Research Phase |
+| P3 | Mobile App Integration | Backlog |
+
+### ⚙️ Hardware Improvements
+| Component | Upgrade Target |
+|-----------|----------------|
+| Wind Vane | 1° precision with hall-effect sensors |
+| Housing | IP67 waterproof enclosures |
+| Power | Solar + supercapacitor backup |
+| Connectivity | LoRaWAN for remote sites |
 
 ---
 
-## 🤝 Contributing & Feedback
+## 🤝 Contributions & Suggestions Welcome!
 
-This project is actively being improved. If you have an idea or suggestion to enhance the system — like improving data handling, adding more sensor support, or optimizing performance — feel free to open an issue or create a pull request.
+If you have suggestions, ideas, or want to improve the system, feel free to open an issue or send a pull request. Your input is valuable and appreciated! 🧠💬
 
-Let's build a smarter world together.
-— *Built from scratch with passion by Thejas 💙*
-
+Let's build something awesome together.
+— *Built with passion by Thejas 💙*
